@@ -27,7 +27,7 @@ export const DEFAULT_SITE: SiteConfig = {
   description:
     "Triumph Global Engineering is a leading Zimbabwean engineering company specialising in borehole drilling, borehole siting, irrigation systems, water solutions and solar installations.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.triumphglobal.co.zw",
-  email: process.env.LEADS_NOTIFY_EMAIL || "info@triumphglobal.co.zw",
+  email: process.env.LEADS_NOTIFY_EMAIL || "ruserewellington22@gmail.com",
   phones: ["0779 651 626", "0782 553 213"],
   phoneIntl: ["263779651626", "263782553213"],
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "263779651626",

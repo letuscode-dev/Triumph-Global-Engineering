@@ -162,11 +162,12 @@ just won’t get an email alert.
    ```env
    RESEND_API_KEY=re_xxxxxxxx
    RESEND_FROM=Triumph Global <onboarding@resend.dev>
-   LEADS_NOTIFY_EMAIL=info@triumphglobal.co.zw
+   LEADS_NOTIFY_EMAIL=ruserewellington22@gmail.com
    ```
 
    - For **development**, Resend allows sending from `onboarding@resend.dev` to
-     your own verified email address only.
+     verified recipients only — add `ruserewellington22@gmail.com` in the Resend dashboard
+     if test emails do not arrive.
    - For **production**, verify your domain in Resend and set `RESEND_FROM` to
      e.g. `Triumph Global <noreply@triumphglobal.co.zw>`.
 
