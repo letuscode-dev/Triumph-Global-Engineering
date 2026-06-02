@@ -10,7 +10,7 @@ export default async function AdminMediaPage() {
     <div>
       <AdminHeader
         title="Media Library"
-        description="Drag & drop to upload images and videos to Cloudinary, then organise your gallery."
+        description="Drag & drop to upload images and videos to Supabase Storage, then organise your gallery."
       />
       <MediaManager initialItems={items} />
     </div>

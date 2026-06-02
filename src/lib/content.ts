@@ -9,7 +9,7 @@ import type {
 } from "./types";
 
 // Stable, royalty-free imagery (Unsplash) used as defaults. Replace any of
-// these by uploading your own media through the Admin Dashboard / Cloudinary.
+// these by uploading your own media through the Admin Dashboard (Supabase Storage).
 const IMG = {
   drillRig:
     "https://images.unsplash.com/photo-1605152276897-4f618f831968?auto=format&fit=crop&w=1200&q=80",

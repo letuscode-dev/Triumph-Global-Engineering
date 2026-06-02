@@ -6,7 +6,7 @@ in borehole drilling, water solutions, irrigation systems and solar
 installations.
 
 Built with **Next.js 16 (App Router, Turbopack)**, **React 19**, **TypeScript**,
-**Tailwind CSS**, **Supabase** and **Cloudinary**.
+**Tailwind CSS**, and **Supabase** (database, CMS, and media storage).
 
 ---
 
@@ -22,8 +22,8 @@ Built with **Next.js 16 (App Router, Turbopack)**, **React 19**, **TypeScript**,
   - Overview with stats & recent leads
   - Lead management (status tracking, search, **CSV export**)
   - Content management for Services, Projects, Blog, Testimonials, FAQs
-  - Media library with **drag-and-drop bulk upload** to Cloudinary
-  - Analytics (lead/inquiry statistics)
+  - Media library with **drag-and-drop bulk upload** to Supabase Storage
+  - Lead insights (inquiry statistics)
   - Settings & integration status
 - **SEO**: dynamic metadata, Open Graph + Twitter cards, dynamic OG image,
   `sitemap.xml`, `robots.txt`, and JSON-LD schema (LocalBusiness, Service,
@@ -31,7 +31,7 @@ Built with **Next.js 16 (App Router, Turbopack)**, **React 19**, **TypeScript**,
 - **Conversion**: floating WhatsApp button, sticky call button, and quote CTAs
   throughout the site (including a quote form on every service page).
 - **Runs out of the box** in "demo mode" with built-in content even before you
-  add Supabase / Cloudinary keys.
+  add Supabase keys.
 
 ---
 
@@ -65,7 +65,6 @@ All variables are optional — the site works with demo data without them. See
 | `ADMIN_SESSION_TOKEN`                                                        | Random secret used to HMAC-sign the admin session cookie |
 | `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`                 | Supabase project                                         |
 | `SUPABASE_SERVICE_ROLE_KEY`                                                  | Server-side Supabase key (keep secret)                   |
-| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` / `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` | Cloudinary uploads                                       |
 | `RESEND_API_KEY` / `RESEND_FROM`                                             | Email delivery of leads via Resend                       |
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`                        | Optional Redis-backed rate limiting (multi-instance)     |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER`                                                | WhatsApp number (international format)                   |
@@ -88,8 +87,9 @@ All variables are optional — the site works with demo data without them. See
 - **Security headers** (`X-Frame-Options`, `X-Content-Type-Options`,
   `Referrer-Policy`, `Permissions-Policy`, CSP `frame-ancestors`) are applied in
   `next.config.mjs`; the admin area is marked `noindex`.
-- The Image Optimizer is restricted to trusted hosts (Cloudinary, Unsplash,
-  Supabase). CMS images from other hosts render un-optimised via `SafeImage`.
+- The Image Optimizer is restricted to trusted hosts (Supabase, Unsplash, and
+  legacy Cloudinary URLs if present). CMS images from other hosts render
+  un-optimised via `SafeImage`.
 - **Google Analytics** loads only after the visitor accepts the cookie-consent
   banner.
 - When Supabase is configured, **all CMS content and leads persist to the
@@ -105,8 +105,8 @@ All variables are optional — the site works with demo data without them. See
    This creates the `leads`, content, and `site_settings` tables with Row Level Security.
 3. If you applied an older schema, also run
    [`supabase/migrations/001_production_hardening.sql`](./supabase/migrations/001_production_hardening.sql).
-3. Copy your Project URL and keys into `.env.local`.
-4. (Optional) Create an admin user under **Authentication → Users** to use
+4. Copy your Project URL and keys into `.env.local`.
+5. (Optional) Create an admin user under **Authentication → Users** to use
    Supabase Auth instead of the demo password gate.
 
 Once configured, lead submissions are stored in the `leads` table and survive
@@ -119,11 +119,9 @@ script creates a public `media` storage bucket, and the admin **Media** page (an
 image fields) upload through a protected server route (`/api/admin/upload`) using the
 service-role key. No extra setup or third-party account is required.
 
-**Cloudinary is optional.** If you set `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` and
-`NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` (an _unsigned_ preset from
-<https://cloudinary.com>), it takes priority over Supabase Storage. Note Cloudinary
-is currently unavailable in some countries (incl. Zimbabwe), in which case just rely
-on Supabase Storage.
+**Cloudinary is not used by default** (and is unavailable in Zimbabwe). The project
+relies on Supabase Storage only. Optional `NEXT_PUBLIC_CLOUDINARY_*` env vars exist
+as a legacy fallback if you ever need them outside Zimbabwe — leave them empty.
 
 ---
 
@@ -181,8 +179,7 @@ Quick path — deploy to **Vercel** (recommended for Next.js):
 - Next.js 16 (App Router, Turbopack) + React 19
 - TypeScript
 - Tailwind CSS
-- Supabase (PostgreSQL, Auth, RLS)
-- Cloudinary (image & video storage)
+- Supabase (PostgreSQL, Storage, Auth, RLS)
 - lucide-react icons
 
 > Admin route protection lives in `src/proxy.ts` (Next.js 16 renamed the

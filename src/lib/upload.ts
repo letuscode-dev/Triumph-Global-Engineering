@@ -1,8 +1,8 @@
 import { isCloudinaryConfigured, uploadToCloudinary } from "./cloudinary";
 import { isSupabaseConfigured } from "./supabase/config";
 
-// Media uploads work when EITHER Cloudinary OR Supabase Storage is configured.
-export const isUploadConfigured = isCloudinaryConfigured || isSupabaseConfigured;
+// Media uploads use Supabase Storage when configured; Cloudinary is an optional fallback.
+export const isUploadConfigured = isSupabaseConfigured || isCloudinaryConfigured;
 
 // Uploads via Supabase Storage through the protected admin route. Uses XHR so
 // we can report progress to the UI.
@@ -44,18 +44,18 @@ function uploadToSupabaseStorage(
 }
 
 /**
- * Uploads a media file and returns its public URL. Prefers Cloudinary when
- * configured, otherwise falls back to Supabase Storage.
+ * Uploads a media file and returns its public URL. Uses Supabase Storage by default;
+ * Cloudinary is only used when Supabase is not configured.
  */
 export async function uploadMedia(
   file: File,
   onProgress?: (pct: number) => void
 ): Promise<string> {
-  if (isCloudinaryConfigured) {
-    return uploadToCloudinary(file, onProgress);
-  }
   if (isSupabaseConfigured) {
     return uploadToSupabaseStorage(file, onProgress);
   }
-  throw new Error("No media storage configured.");
+  if (isCloudinaryConfigured) {
+    return uploadToCloudinary(file, onProgress);
+  }
+  throw new Error("No media storage configured. Connect Supabase to enable uploads.");
 }

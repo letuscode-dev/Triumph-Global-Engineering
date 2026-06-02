@@ -4,7 +4,6 @@ import {
   XCircle,
 } from "lucide-react";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
-import { isCloudinaryConfigured } from "@/lib/cloudinary";
 import { isUploadConfigured } from "@/lib/upload";
 import { hasCustomAdminPassword } from "@/lib/admin-credentials";
 import { getLeadNotifyEmail, getResendFrom, isResendConfigured } from "@/lib/email";
@@ -140,9 +139,9 @@ export default async function SettingsPage() {
               label="Media Uploads"
               ok={isUploadConfigured}
               hint={
-                isCloudinaryConfigured
-                  ? "Image & video uploads (Cloudinary)"
-                  : "Image & video uploads (Supabase Storage)"
+                isUploadConfigured
+                  ? "Image & video uploads (Supabase Storage)"
+                  : "Connect Supabase to enable image & video uploads"
               }
             />
             <StatusRow

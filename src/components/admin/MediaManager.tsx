@@ -27,7 +27,7 @@ export function MediaManager({ initialItems }: { initialItems: MediaItem[] }) {
     setError("");
     if (!isUploadConfigured) {
       setError(
-        "Uploads are not configured. Connect Supabase (or Cloudinary) to enable media uploads."
+        "Uploads are not configured. Connect Supabase to enable media uploads."
       );
       return;
     }

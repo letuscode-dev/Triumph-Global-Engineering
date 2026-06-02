@@ -16,7 +16,7 @@ in your hosting provider’s environment settings.
 | Supabase           | Configured | Database, CMS content, leads, storage      |
 | Media uploads      | Configured | Supabase Storage (`media` bucket)          |
 | Google Analytics   | Configured | ID `G-FYMXDJ721F`, consent-gated           |
-| Cloudinary         | Skipped  | Unavailable in Zimbabwe; not required      |
+| Cloudinary         | Not used | Supabase Storage handles all uploads       |
 | Lead email (Resend)| Configured | Notifications to `LEADS_NOTIFY_EMAIL`      |
 | Rate limit (Upstash)| Not set | Recommended for production — see §7        |
 
@@ -70,7 +70,7 @@ Use **Production** (and optionally Preview) scope.
 | `UPSTASH_REDIS_REST_URL` | Optional | Multi-instance rate limiting (§7) |
 | `UPSTASH_REDIS_REST_TOKEN` | Optional | Paired with Upstash URL |
 | `NEXT_PUBLIC_GOOGLE_MAPS_EMBED` | Optional | Contact page map iframe URL |
-| `NEXT_PUBLIC_CLOUDINARY_*` | Optional | Only if Cloudinary becomes available |
+| `NEXT_PUBLIC_CLOUDINARY_*` | Not used | Leave empty — media uses Supabase Storage |
 
 **Never** expose `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_SESSION_TOKEN`, or
 `RESEND_API_KEY` to the browser (no `NEXT_PUBLIC_` prefix).
@@ -144,7 +144,7 @@ Upgrade the plan if you upload many large videos.
 - Public URLs look like:
   `https://xyolxuomcvewqqsmldnd.supabase.co/storage/v1/object/public/media/...`
 - Max file size: **50 MB** per upload (images and videos).
-- Cloudinary is **optional** and unused in Zimbabwe; leave Cloudinary env vars empty.
+- Media uploads use **Supabase Storage** only. Do not set Cloudinary env vars.
 
 ---
 
