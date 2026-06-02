@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white shadow-lg shadow-brand-600/20 hover:bg-brand-700 focus:ring-brand-500;
+  }
+  .btn-secondary {
+    @apply btn bg-leaf-600 text-white shadow-lg shadow-leaf-600/20 hover:bg-leaf-700 focus:ring-leaf-500;
+  }
+  .btn-outline {
+    @apply btn border-2 border-brand-600 bg-transparent text-brand-700 hover:bg-brand-50 focus:ring-brand-500;
+  }
+  .btn-white {
+    @apply btn bg-white text-brand-700 shadow-lg hover:bg-brand-50 focus:ring-white;
+  }
+
+  .section {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-700 ring-1 ring-inset ring-brand-100;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-300;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/60;
+  }
+
+  .heading-gradient {
+    @apply bg-gradient-to-r from-brand-700 via-brand-600 to-leaf-600 bg-clip-text text-transparent;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
+  }
+}
+
+/* Masonry-style gallery columns */
+.masonry {
+  column-gap: 1rem;
+}
+.masonry > * {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
