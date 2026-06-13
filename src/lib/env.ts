@@ -9,8 +9,11 @@ export function validateProductionEnv(): void {
   if (!process.env.ADMIN_SESSION_TOKEN?.trim()) {
     missing.push("ADMIN_SESSION_TOKEN");
   }
-  if (!process.env.NEXT_PUBLIC_SITE_URL?.trim()) {
-    missing.push("NEXT_PUBLIC_SITE_URL");
+  if (
+    !process.env.NEXT_PUBLIC_SITE_URL?.trim() &&
+    !process.env.VERCEL_URL?.trim()
+  ) {
+    missing.push("NEXT_PUBLIC_SITE_URL (optional on Vercel — uses *.vercel.app until you add a domain)");
   }
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()) {
     missing.push("NEXT_PUBLIC_SUPABASE_URL");

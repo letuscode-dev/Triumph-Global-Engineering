@@ -20,13 +20,22 @@ export type SiteConfig = {
   };
 };
 
+/** Canonical public site URL. Uses Vercel's URL until a custom domain is configured. */
+export function getSiteUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configured) return configured.replace(/\/$/, "");
+  const vercel = process.env.VERCEL_URL?.trim();
+  if (vercel) return `https://${vercel}`;
+  return "https://www.triumphglobal.co.zw";
+}
+
 export const DEFAULT_SITE: SiteConfig = {
   name: "Triumph Global Engineering",
   shortName: "Triumph Global",
   slogan: "Engineering Zimbabwe's Water, Irrigation & Solar Future",
   description:
     "Triumph Global Engineering is a leading Zimbabwean engineering company specialising in borehole drilling, borehole siting, irrigation systems, water solutions and solar installations.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.triumphglobal.co.zw",
+  url: getSiteUrl(),
   email: process.env.LEADS_NOTIFY_EMAIL || "ruserewellington22@gmail.com",
   phones: ["0779 651 626", "0782 553 213"],
   phoneIntl: ["263779651626", "263782553213"],

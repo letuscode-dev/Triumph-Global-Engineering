@@ -192,6 +192,24 @@ For reliable protection:
 
 ## 8. Deploy to Vercel (recommended)
 
+### 8.0 Go live now (Vercel URL — no custom domain yet)
+
+Use this when the site is **not** on `triumphglobal.co.zw` / `triumphglobalengineering.com` yet.
+
+1. Repo is already on GitHub: `letuscode-dev/Triumph-Global-Engineering`.
+2. [https://vercel.com/new](https://vercel.com/new) → **Import** that repo.
+3. **Environment Variables** (Production) — copy from your local `.env.local`:
+   - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+   - `ADMIN_PASSWORD` — **must not** be `triumph-admin` (use a strong password)
+   - `ADMIN_SESSION_TOKEN` — long random string (see §3)
+   - `LEADS_NOTIFY_EMAIL`, `RESEND_API_KEY`, `RESEND_FROM`
+   - `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_GOOGLE_MAPS_EMBED`
+   - `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (recommended)
+   - **Skip** `NEXT_PUBLIC_SITE_URL` for now — the app uses your `*.vercel.app` URL automatically.
+4. Click **Deploy**. Note the URL, e.g. `https://triumph-global-engineering.vercel.app`.
+5. Test `/`, `/admin`, submit a lead, upload media.
+6. When you buy a real domain (§9), set `NEXT_PUBLIC_SITE_URL` and redeploy.
+
 ### 8.1 Push to GitHub
 
 ```bash
@@ -206,7 +224,7 @@ Ensure `.env.local` is **not** in the commit.
 
 ### 8.2 Import on Vercel
 
-1. [https://vercel.com](https://vercel.com) → **Add New Project** → import the GitHub repo.
+1. [https://vercel.com](https://vercel.com) → **Add New Project** → import `letuscode-dev/Triumph-Global-Engineering`.
 2. Framework preset: **Next.js** (auto-detected).
 3. **Environment Variables** — paste all vars from §2 (Production).
 4. Deploy.
