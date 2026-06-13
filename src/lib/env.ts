@@ -26,8 +26,21 @@ export function validateProductionEnv(): void {
   }
 
   const password = process.env.ADMIN_PASSWORD?.trim();
+  const supabaseAdminReady = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
+  );
+
   if (!password || password === "triumph-admin") {
-    missing.push("ADMIN_PASSWORD (must be set to a strong, non-default value)");
+    if (supabaseAdminReady) {
+      console.warn(
+        "[env] ADMIN_PASSWORD is unset or still the dev default. " +
+          "Login uses the password stored in Supabase when available; " +
+          "set a strong ADMIN_PASSWORD in Vercel as a fallback."
+      );
+    } else {
+      missing.push("ADMIN_PASSWORD (must be set to a strong, non-default value)");
+    }
   }
 
   if (missing.length > 0) {
