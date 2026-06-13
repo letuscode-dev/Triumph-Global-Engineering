@@ -7,6 +7,7 @@ import { getServices } from "@/lib/repository";
 import { getSiteSettings } from "@/lib/site-settings";
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { Analytics } from "@/components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -67,6 +68,7 @@ export default async function RootLayout({
           {children}
         </SiteFrame>
         <Analytics gaId={GA_ID} />
+        <VercelAnalytics />
         <SpeedInsights />
       </body>
     </html>
