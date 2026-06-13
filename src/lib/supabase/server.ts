@@ -42,3 +42,14 @@ export function createAdminClient() {
     cookies: { getAll: () => [], setAll: () => {} },
   });
 }
+
+/** Quick probe used in admin to detect a bad service-role key before saves fail. */
+export async function probeSupabaseAdmin(): Promise<{ ok: boolean; error?: string }> {
+  const supabase = createAdminClient();
+  if (!supabase) {
+    return { ok: false, error: "SUPABASE_SERVICE_ROLE_KEY is not set." };
+  }
+  const { error } = await supabase.from("services").select("slug").limit(1);
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}

@@ -10,7 +10,7 @@ export const SESSION_COOKIE = "tge_admin";
 export const SESSION_TTL_MS = 1000 * 60 * 60 * 12; // 12 hours
 
 export const ADMIN_PASSWORD =
-  process.env.ADMIN_PASSWORD || (isProd ? "" : "triumph-admin");
+  (process.env.ADMIN_PASSWORD || (isProd ? "" : "triumph-admin")).trim();
 
 function secret(): string {
   if (process.env.ADMIN_SESSION_TOKEN) return process.env.ADMIN_SESSION_TOKEN;

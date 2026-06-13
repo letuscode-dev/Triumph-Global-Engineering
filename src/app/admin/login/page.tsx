@@ -23,11 +23,20 @@ function LoginForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
       });
-      if (!res.ok) throw new Error();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(
+          typeof data.error === "string" && data.error
+            ? data.error
+            : "Login failed. Please try again."
+        );
+        setLoading(false);
+        return;
+      }
       router.push(safeAdminRedirect(params.get("from")));
       router.refresh();
     } catch {
-      setError("Incorrect password. Please try again.");
+      setError("Login failed. Please try again.");
       setLoading(false);
     }
   }

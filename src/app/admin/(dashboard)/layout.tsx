@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { SupabaseStatusBanner } from "@/components/admin/SupabaseStatusBanner";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -11,7 +12,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="flex min-h-screen flex-col bg-slate-50 lg:flex-row">
       <AdminSidebar />
       <div className="flex-1 overflow-x-hidden">
-        <div className="mx-auto max-w-6xl p-5 sm:p-8">{children}</div>
+        <div className="mx-auto max-w-6xl p-5 sm:p-8">
+          <SupabaseStatusBanner />
+          {children}
+        </div>
       </div>
     </div>
   );
