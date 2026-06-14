@@ -87,7 +87,7 @@ export function ContentManager({
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/^-|-$/g, "");
       } else {
-        item[idField] = `${type}-${Date.now()}`;
+        item[idField] = crypto.randomUUID();
       }
     }
     // Normalise tags fields from comma string to array.

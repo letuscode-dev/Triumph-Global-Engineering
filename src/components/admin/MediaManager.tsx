@@ -20,7 +20,16 @@ export function MediaManager({ initialItems }: { initialItems: MediaItem[] }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ type: "media", item }),
     });
-    return res.ok;
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setError(
+        typeof data.error === "string" && data.error
+          ? `Uploaded ${item.caption} but could not save: ${data.error}`
+          : `Uploaded ${item.caption} but could not save to the database.`
+      );
+      return false;
+    }
+    return true;
   }
 
   async function handleFiles(files: FileList | File[]) {
@@ -40,17 +49,14 @@ export function MediaManager({ initialItems }: { initialItems: MediaItem[] }) {
           setUploading((u) => u.map((x) => (x.name === label ? { ...x, pct } : x)))
         );
         const item: MediaItem = {
-          id: `media-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+          id: crypto.randomUUID(),
           type: file.type.startsWith("video") ? "video" : "image",
           src: url,
           caption: file.name.replace(/\.[^.]+$/, ""),
           category,
         };
         const saved = await persist(item);
-        if (!saved) {
-          setError(`Uploaded ${label} but could not save to the database.`);
-          continue;
-        }
+        if (!saved) continue;
         setItems((prev) => [item, ...prev]);
       } catch (e) {
         setError(e instanceof Error ? e.message : `Failed to upload ${label}.`);
